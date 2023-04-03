@@ -1,0 +1,16 @@
+{
+  "name": "browserstack---cypress",
+  "version": "1.0.0",
+  "description": "Cypress integration to browserstack",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "browserstack-cypress": "browserstack-cypress run --sync",
+    "browserstack-cypress-parallel": "browserstack-cypress run-parallel --sync"
+  },
+  "author": "Hero",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^12.5.1"
+  }
+}
