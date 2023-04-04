@@ -1,5 +1,7 @@
 name: 'BrowserStack Test'
 on: [push, pull_request]
+  branches: 
+    - main
 jobs:
   ubuntu-job:
     name: 'BrowserStack Test on Ubuntu'
@@ -11,3 +13,10 @@ jobs:
         with:
           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      
+      - name: 'cypress browserstack' 
+      - uses: actions/checkout@v2
+      - uses: cypress-io/github-action@v4
+        with:
+          browser: chrome
+          headless: true
