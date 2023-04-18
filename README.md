@@ -12,8 +12,8 @@
     ```
         {
             "auth": {
-                "username": "testaccount_23su9Z",
-                "access_key": "9ZxPSqMuRFdheHYZ28Wx"
+                "username": "testaccount_******",
+                "access_key": "**************"
             },
             "browsers": [{
                 "browser": "chrome",
@@ -54,7 +54,9 @@
     ...
     "run_settings": {
         ...
-        "cypress_version": "12.latest",
+        "npm_dependencies": {
+            "Cypress": "^**.*.*"
+        },
         ...
         }
     ...
