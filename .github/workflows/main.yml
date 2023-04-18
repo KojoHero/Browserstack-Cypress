@@ -21,30 +21,60 @@
 #           browser: chrome
 #           headless: true
 
-name: 'BrowserStack Test'
-on: [push, pull_request]
+# name: 'BrowserStack Test'
+# on: [push, pull_request]
+# jobs:
+#   ubuntu-job:
+#     name: 'BrowserStack Test on Ubuntu'
+#     runs-on: ubuntu-latest  # Can be self-hosted runner also
+#     steps:
+
+#       - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
+#         uses: browserstack/github-actions/setup-env@master
+#         with:
+#           username:  ${{ secrets.BROWSERSTACK_USERNAME }}
+#           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+
+# # The next 3 steps are for building the web application to be tested and starting the web server on the runner environment
+#       - name: 'Checkout the repository'
+#         uses: actions/checkout@v2
+
+#       - name: 'Building web application to be tested'
+#         run: npm install
+
+#       - name: 'Running application under test'
+#         run: ./node_modules/.bin/http-server -p 8099 &
+
+#       - name: 'Installing browserstack-cypress-cli'
+#         run: npm install -g browserstack-cypress-cli
+
+
+name: Cypress BrowserStack Tests
+
+on: [push]
+
 jobs:
-  ubuntu-job:
-    name: 'BrowserStack Test on Ubuntu'
-    runs-on: ubuntu-latest  # Can be self-hosted runner also
+  build:
+    runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
 
-      - name: 'BrowserStack Env Setup'  # Invokes the setup-env action
-        uses: browserstack/github-actions/setup-env@master
-        with:
-          username:  ${{ secrets.BROWSERSTACK_USERNAME }}
-          access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14.x'
 
-# The next 3 steps are for building the web application to be tested and starting the web server on the runner environment
-      - name: 'Checkout the repository'
-        uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: npm install
 
-      - name: 'Building web application to be tested'
-        run: npm install
+    - name: Run Cypress Tests
+      env:
+        BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+        BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      run: |
+        npx cypress run --browser browserstack:chrome --config-file cypress.config.json
 
-      - name: 'Running application under test'
-        run: ./node_modules/.bin/http-server -p 8099 &
 
-      - name: 'Installing browserstack-cypress-cli'
-        run: npm install -g browserstack-cypress-cli
 
